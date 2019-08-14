@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 需要实现的DAO接口：namespace="com.qianfeng.dao.UserDAO" -->
+<!--实现上面的接口-->
+<mapper namespace="chen.zsgc.dao.UserDao">
+    <select id="queryAll" resultType="User">
+        select id,name,gender,create_time  from t_user
+    </select>
+    <select id="queryOne" resultType="User" parameterType="int">
+        select id,name,gender,create_time from t_user
+        where id=#{id}
+    </select>
+    <insert id="insertUser" parameterType="User">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        insert into t_user(name,gender,create_time)
+        values(#{name},#{gender},#{create_time})
+    </insert>
+    <update id="updateUser" parameterType="User">
+        update t_user
+        set name=#{name},gender=#{gender},create_time=#{create_time}
+        where id=#{id}
+    </update>
+    <delete id="deleteUser" parameterType="int">
+        delete from t_user where id=#{id}
+    </delete>
+
+
+</mapper>

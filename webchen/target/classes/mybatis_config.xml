@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- mybatis的全局配置文件 -->
+<configuration>
+    <!-- 记载外部的参数文件 -->
+    <properties resource="jdbc1905.properties"/>
+    <!-- 定义别名 -->
+    <typeAliases>
+        <!-- 1. 单独为每个类定义别名，则 "Page"等价于"com.zhj.domain.Page"
+		<typeAlias type="com.zhj.domain.Page" alias="Page"/>
+        <typeAlias type="com.zhj.domain.User" alias="User"/>-->
+        <!-- 2. 定义缺省包，当mapper中的类型没有定义包时，使用此配置作为默认包；
+ 			 则 “Page” 会自动认为是 “com.zhj.domain”中的“Page”，即“com.zhj.domain.Page”
+			 则 “User” 会自动认为是 “com.zhj.domain”中的“User”，即“com.zhj.domain.User”-->
+        <package name="chen.zsgc.pojo"/>
+    </typeAliases>
+    <!-- 使用 id为“development”的环境信息 -->
+    <environments default="development">
+        <environment id="development">
+            <!-- 配置JDBC事务控制，由mybatis进行管理 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源，采用mybatis连接池 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}" />
+                <!-- 【&】是特殊字符，【&amp;】是【&】的转义 -->
+                <property name="url" value="${jdbc.url}" />
+                <property name="username" value="${jdbc.user}" />
+                <property name="password" value="${jdbc.password}" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 加载映射文件 -->
+    <mappers>
+        <!-- 使用资源的路径
+        <mapper resource="com/zhj/dao/UserDAO.xml"/> -->
+        <!-- 加载某个包下的映射文件 （推荐）
+            要求：Mapper接口的名称与映射文件名称一致 且 必须在同一个目录下 -->
+        <package name="chen.zsgc.dao"/>
+    </mappers>
+</configuration>
